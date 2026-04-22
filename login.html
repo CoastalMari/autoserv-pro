@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — AutoServ Pro</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+    .login-box {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-top: 4px solid var(--accent);
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 380px;
+    }
+    .login-brand {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 28px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+    .login-brand span { color: var(--white); }
+    .login-sub {
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: 36px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-box">
+  <div class="login-brand">Auto<span>Serv</span> Pro</div>
+  <div class="login-sub">Staff Login</div>
+
+  <div class="field" style="margin-bottom:16px;">
+    <label>Username</label>
+    <input type="text" id="username" placeholder="Enter username" autofocus>
+  </div>
+  <div class="field" style="margin-bottom:24px;">
+    <label>Password</label>
+    <input type="password" id="password" placeholder="Enter password">
+  </div>
+
+  <div id="error" class="error-msg" style="margin-bottom:16px;">Incorrect username or password.</div>
+
+  <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="doLogin()">Sign In →</button>
+</div>
+
+<script src="script.js"></script>
+<script>
+  // Already logged in? Skip to dashboard
+  if (isLoggedIn()) window.location.href = 'index.html';
+
+  function doLogin() {
+    const u = document.getElementById('username').value.trim();
+    const p = document.getElementById('password').value;
+    if (u === AUTH_USER && p === AUTH_PASS) {
+      sessionStorage.setItem('authed', 'yes');
+      window.location.href = 'index.html';
+    } else {
+      document.getElementById('error').style.display = 'block';
+    }
+  }
+
+  // Allow Enter key to submit
+  document.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+</script>
+
+</body>
+</html>
