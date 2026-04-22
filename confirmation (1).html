@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appointment Confirmed — AutoServ Pro</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html">Auto<span>Serv</span> Pro</a>
+  <a href="index.html">Dashboard</a>
+  <a href="schedule.html">Schedule</a>
+  <a href="workorders.html">Work Orders</a>
+  <a href="inventory.html">Inventory</a>
+</nav>
+
+<div class="page">
+
+  <div class="confirm-box">
+    <span class="confirm-icon">✅</span>
+    <h1>Appointment Confirmed</h1>
+    <div class="conf-num" id="conf-num">—</div>
+
+    <div class="confirm-details" id="confirm-details">
+      <div class="confirm-row">
+        <span class="lbl">Customer</span>
+        <span class="val" id="c-name">—</span>
+      </div>
+      <div class="confirm-row">
+        <span class="lbl">Vehicle</span>
+        <span class="val" id="c-vehicle">—</span>
+      </div>
+      <div class="confirm-row">
+        <span class="lbl">Service</span>
+        <span class="val" id="c-service">—</span>
+      </div>
+      <div class="confirm-row">
+        <span class="lbl">Date</span>
+        <span class="val" id="c-date">—</span>
+      </div>
+      <div class="confirm-row">
+        <span class="lbl">Time</span>
+        <span class="val" id="c-time">—</span>
+      </div>
+      <div class="confirm-row">
+        <span class="lbl">Phone</span>
+        <span class="val" id="c-phone">—</span>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <a href="workorders.html" class="btn btn-primary">View Work Orders</a>
+      <a href="schedule.html" class="btn btn-secondary">Book Another</a>
+      <a href="index.html" class="btn btn-secondary">Dashboard</a>
+    </div>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+<script>
+  const saved = JSON.parse(localStorage.getItem('lastAppt'));
+  if (saved) {
+    document.getElementById('conf-num').textContent = 'Confirmation #' + saved.confirmation;
+    document.getElementById('c-name').textContent = saved.name;
+    const vehicle = [saved.year, saved.make, saved.model].filter(Boolean).join(' ') || saved.vehicle || '—';
+    document.getElementById('c-vehicle').textContent = vehicle;
+    document.getElementById('c-service').textContent = saved.service;
+
+    // Format date nicely
+    let dateStr = saved.date;
+    try {
+      const d = new Date(saved.date + 'T12:00:00');
+      dateStr = d.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    } catch(e) {}
+
+    document.getElementById('c-date').textContent = dateStr;
+    document.getElementById('c-time').textContent = saved.time;
+    document.getElementById('c-phone').textContent = saved.phone || '—';
+  } else {
+    document.getElementById('conf-num').textContent = 'No appointment data found.';
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoServ Pro — Service Management</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html">Auto<span>Serv</span> Pro</a>
+  <a href="index.html" class="active">Dashboard</a>
+  <a href="schedule.html">Schedule</a>
+  <a href="workorders.html">Work Orders</a>
+  <a href="inventory.html">Inventory</a>
+</nav>
+
+<div class="page">
+
+  <div class="hero">
+    <div class="hero-label">Automotive Service Management System</div>
+    <h1>AutoServ Pro</h1>
+    <p>Schedule appointments, track work orders, and manage parts inventory — all in one place. Built for professional auto service operations.</p>
+    <a href="schedule.html" class="btn btn-primary">&#43; Schedule Appointment</a>
+  </div>
+
+  <div class="stats" id="stats-row">
+    <div class="stat">
+      <div class="stat-num" id="stat-appts">0</div>
+      <div class="stat-label">Appointments</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="stat-orders">0</div>
+      <div class="stat-label">Work Orders</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="stat-pending">0</div>
+      <div class="stat-label">Pending</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="stat-items">0</div>
+      <div class="stat-label">Parts in Stock</div>
+    </div>
+  </div>
+
+  <div class="card-grid">
+    <a href="schedule.html" class="card">
+      <span class="card-icon">📅</span>
+      <h3>Schedule Service</h3>
+      <p>Book a new service appointment for a customer vehicle. Choose date, time, and service type.</p>
+    </a>
+    <a href="workorders.html" class="card">
+      <span class="card-icon">🔧</span>
+      <h3>Work Orders</h3>
+      <p>View and manage all active work orders. Track status from pending to completed.</p>
+    </a>
+    <a href="inventory.html" class="card">
+      <span class="card-icon">📦</span>
+      <h3>Parts Inventory</h3>
+      <p>Track parts and supplies. Monitor stock levels and get alerts for low inventory items.</p>
+      <span class="card-badge">Live</span>
+    </a>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+<script>
+  // Load live stats from storage
+  const appts = JSON.parse(localStorage.getItem('appointments') || '[]');
+  const orders = JSON.parse(localStorage.getItem('workOrders') || '[]');
+  const inventory = JSON.parse(localStorage.getItem('inventory') || JSON.stringify(defaultInventory()));
+
+  document.getElementById('stat-appts').textContent = appts.length;
+  document.getElementById('stat-orders').textContent = orders.length;
+  document.getElementById('stat-pending').textContent = orders.filter(o => o.status === 'Pending' || o.status === 'In Progress').length;
+  document.getElementById('stat-items').textContent = inventory.length;
+
+  function defaultInventory() { return []; }
+</script>
+
+</body>
+</html>
